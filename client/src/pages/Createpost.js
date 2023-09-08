@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+
 
 function Createpost() {
 
@@ -19,9 +21,11 @@ function Createpost() {
 
     const onSubmit = (data) => {
         axios.post("http://localhost:3000/posts", data).then((response) => {
-        console.log("it fucking work ???")
+            nav("/")
     });
     };
+
+    let nav =  useNavigate()
 
   return (
     <div className="createPostPage">
