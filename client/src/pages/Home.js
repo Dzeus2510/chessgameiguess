@@ -6,11 +6,7 @@ function Home() {
 
     useEffect(() => {
         axios.get("http://localhost:3000/posts").then((response) => {
-            console.log(response.data);
             setListOfPost(response.data);
-        })
-        .catch((error) => {
-            console.error(error);
         });
     }, []);
 
