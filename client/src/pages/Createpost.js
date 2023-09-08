@@ -32,13 +32,13 @@ function Createpost() {
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
             <Form>
                 <br></br><label>Title: </label>
-                <ErrorMessage name="title" component="span" /><br></br>
+                <ErrorMessage name="title" component="span" />
                 <Field id="formContainer" name="title" placeholder="Write Title" />
                 <br></br><label>Post: </label>
-                <ErrorMessage name="postText" component="span" /><br></br>
+                <ErrorMessage name="postText" component="span" />
                 <Field id="formContainer" name="postText" placeholder="Write Post" />
                 <br></br><label>Name: </label>
-                <ErrorMessage name="displayname" component="span" /><br></br>
+                <ErrorMessage name="displayname" component="span" />
                 <Field id="formContainer" name="displayname" placeholder="Your Name" />
 
                 <button type="submit">Create Post</button>
