@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { Post } = require("../models");
 
-router.get("/", (req,res) => {
-    res.json("Hee Hee");
+//async is like a secret method ?
+router.get("/", async (req,res) => {
+    const listOfPost = await Post.findAll();
+    res.json(listOfPost);
 });
 
 router.post("/", async (req, res) => {
