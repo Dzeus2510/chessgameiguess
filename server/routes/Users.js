@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
             if (!match) res.json({ error: "Wrong username or password (or both)" });
             else{
                 const accessToken = sign({username: user.username, id: user.id, displayname: user.displayname}, "important")
-                res.json(accessToken)
+                res.json({token: accessToken, username: user.username, displayname: user.displayname, id: user.id})
             }
             
         });
