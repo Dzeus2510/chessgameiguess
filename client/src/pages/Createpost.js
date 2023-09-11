@@ -30,7 +30,7 @@ function Createpost() {
   return (
     <div className="createPostPage">
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
-            <Form>
+            <Form className="formContainer"> 
                 <br></br><label>Title: </label>
                 <ErrorMessage name="title" component="span" />
                 <Field id="formContainer" name="title" placeholder="Write Title" />

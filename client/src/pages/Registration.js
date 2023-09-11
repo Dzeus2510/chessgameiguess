@@ -25,7 +25,7 @@ function Registration() {
   return (
     <div className="createPostPage">
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
-            <Form>
+            <Form className="formContainer">
                 <br></br><label>Username: </label>
                 <ErrorMessage name="username" component="span" />
                 <Field id="formContainer" name="username" placeholder="Username" />
@@ -35,7 +35,7 @@ function Registration() {
                 <br></br><label>Display Name: </label>
                 <ErrorMessage name="displayname" component="span" />
                 <Field id="formContainer" name="displayname" placeholder="Your Display Name" />
-
+                <br></br>
                 <button type="submit">Create Account</button>
             </Form>
         </Formik>

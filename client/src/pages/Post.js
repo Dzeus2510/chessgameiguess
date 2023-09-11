@@ -25,10 +25,19 @@ function Post() {
     }, [id]); // Specify 'id' as a dependency, if not it gonna run forever
 
 const addComment = () => {
-    axios.post("http://localhost:3000/comments", {commentBody: newComment , PostId: id}).then((response) => {
-        const commentToAdd = {commentBody: newComment}
+    axios.post("http://localhost:3000/comments", {commentBody: newComment , PostId: id},
+    {
+        headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+        },
+    }).then((response) => {
+        if(response.data.error){
+            alert(response.data.error);
+        } else {
+        const commentToAdd = {commentBody: newComment, displayname: response.data.displayname}
         setComments([...comments, commentToAdd])
         setNewComment("")
+        }
     })
 }
 
@@ -36,9 +45,11 @@ return (
     <div>
         <div className='postPage'>
             <div className='leftSide'>
+            <div className="post" id="individual">
                 <div className='title'>{postObject.title}</div>
                 <div className='postText'>{postObject.postText}</div>
                 <div className='footer'>{postObject.displayname}</div>
+            </div>
             </div>
             <div className='rightSide'>
                 <div className='addCommentContainer'>
@@ -47,7 +58,10 @@ return (
                 </div>
                 <div className='listOfComment'>
                     {comments.map((comment, key) => {
-                        return <div className='comment'> {comment.commentBody} </div>
+                        return <div className='comment'>
+                        <label>Name: {comment.displayname}</label><br></br>
+                         {comment.commentBody} 
+                        </div>
                     })}
                 </div>
             </div>

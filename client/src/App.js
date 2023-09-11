@@ -10,10 +10,12 @@ function App() {
   return (
   <div className="App">
     <Router>
+      <div className='navbar'>
       <Link to="/post">Create A Post</Link><br></br>
-      <Link to="/">Homepage</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/registration">Registration</Link>
+      <Link to="/">Homepage</Link><br></br>
+      <Link to="/login">Login</Link><br></br>
+      <Link to="/registration">Registration</Link><br></br>
+      </div>
     </Router>
   <Router>
     <Routes>

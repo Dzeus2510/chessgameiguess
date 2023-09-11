@@ -26,7 +26,7 @@ router.post("/login", async (req, res) => {
         bcrypt.compare(password, user.password).then((match) => {
             if (!match) res.json({ error: "Wrong username or password (or both)" });
             else{
-                const accessToken = sign({username: user.username, id: user.id}, "important")
+                const accessToken = sign({username: user.username, id: user.id, displayname: user.displayname}, "important")
                 res.json(accessToken)
             }
             
