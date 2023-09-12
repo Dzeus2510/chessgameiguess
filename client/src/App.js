@@ -23,14 +23,18 @@ function App() {
         if (response.data.error) {
           setAuthState({ ...authState, status: false });
         } else {
-          setAuthState({ displayname: response.data.displayname, id: response.data.id, status: true });
+          setAuthState({
+            displayname: response.data.displayname,
+            id: response.data.id,
+            status: true,
+          });
         }
       });
-  }, [authState]);
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("accessToken")
-    setAuthState({ ...authState, status: false });
+    setAuthState({ displayname: "", id: 0, status: false });
   }
 
   return (
