@@ -20,17 +20,17 @@ function App() {
     axios
       .get("http://localhost:3000/auth/auth", {
         headers: {
-          AccessToken: localStorage.getItem("accessToken"),
+          accessToken: localStorage.getItem("accessToken"),
         },
       })
       .then((response) => {
-        if (response.data.error) {
+        if (!localStorage.getItem("accessToken")) {
           setAuthState({ ...authState, status: false });
         } else {
           setAuthState({
             displayname: response.data.displayname,
             id: response.data.id,
-            status: true,
+            status: true
           });
         }
       });
@@ -57,7 +57,7 @@ function App() {
               )}
             </div>
             <div className="loggedInContainer">
-              <h1>{authState.displayname} </h1>
+              <h1>{authState.status} </h1>
               {authState.status && <button onClick={logout}> Logout</button>}
             </div>
           </div>

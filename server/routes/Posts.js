@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { Post } = require("../models");
+const { Post, Like } = require("../models");
 
 //async is like a secret method ?
 router.get("/", async (req,res) => {
-    const listOfPost = await Post.findAll();
+    const listOfPost = await Post.findAll({include: [Like] });
     res.json(listOfPost);
 });
 
