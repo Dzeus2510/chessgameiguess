@@ -16,6 +16,7 @@ function App() {
     status: false,
   });
 
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/auth/auth", {
@@ -25,16 +26,20 @@ function App() {
       })
       .then((response) => {
         if (!localStorage.getItem("accessToken")) {
-          setAuthState({ ...authState, status: false });
+          setAuthState({ displayname: "", id: 0, status: false });
         } else {
-          setAuthState({
+          const updatedAuthState = {
             displayname: response.data.displayname,
             id: response.data.id,
-            status: true
-          });
+            status: true,
+          };
+          setAuthState(updatedAuthState);
+          // Store the updated status in local storage
+          localStorage.setItem("authStatus", JSON.stringify(updatedAuthState));
         }
       });
   }, []);
+  
 
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -48,7 +53,7 @@ function App() {
           <div className="navbar">
             <div className="links">
               <Link to="/"> HomePage</Link>
-              <Link to="/post"> Create A Post</Link>
+              <Link to="/createpost"> Create A Post</Link>
               {!authState.status && (
                 <>
                   <Link to="/login"> Login</Link>
@@ -57,14 +62,14 @@ function App() {
               )}
             </div>
             <div className="loggedInContainer">
-              <h1>{authState.status} </h1>
+              <h1>{authState.displayname} </h1>
               {authState.status && <button onClick={logout}> Logout</button>}
             </div>
           </div>
           <Routes>
             <Route path="/" element={<Home/>} />
-            <Route path="/post" element={<Createpost/>} />
-            <Route path="/display/:id" element={<Post/>} />
+            <Route path="/createpost" element={<Createpost/>} />
+            <Route path="/post/:id" element={<Post/>} />
             <Route path="/registration" element={<Registration/>} />
             <Route path="/login" element={<Login/>} />
           </Routes>

@@ -1,57 +1,68 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 
 function Post() {
-    let { id } = useParams();
-    let [postObject, setPostObject] = useState({})
-    let [comments, setComments] = useState([])
-    const [newComment, setNewComment] = useState("")
-    const { authState } = useContext(AuthContext)
+  let { id } = useParams();
+  const [postObject, setPostObject] = useState({});
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const { authState } = useContext(AuthContext);
 
-    useEffect(() => {
-        // Define an async function to fetch data
-        async function fetchData() {
-            try {
-                const postResponse = await axios.get(`http://localhost:3000/posts/byId/${id}`);
-                const commentResponse = await axios.get(`http://localhost:3000/comments/${id}`);
-                setPostObject(postResponse.data);
-                setComments(commentResponse.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-        // Call the fetchData function
-        fetchData();
-    }, [id]); // Specify 'id' as a dependency, if not it gonna run forever
+  useEffect(() => {
+    axios.get(`http://localhost:3000/posts/byId/${id}`).then((response) => {
+      setPostObject(response.data);
+    });
 
-const addComment = () => {
-    axios.post("http://localhost:3000/comments", {commentBody: newComment , PostId: id},
-    {
-        headers: {
-            accessToken: localStorage.getItem("accessToken"),
+    axios.get(`http://localhost:3000/comments/${id}`).then((response) => {
+      setComments(response.data);
+    });
+  }, [id]);
+
+  const addComment = () => {
+    axios
+      .post(
+        "http://localhost:3000/comments",
+        {
+          commentBody: newComment,
+          PostId: postObject.id,
         },
-    }).then((response) => {
-        if(response.data.error){
-            alert(response.data.error);
-        } else {
-        const commentToAdd = {commentBody: newComment, displayname: response.data.displayname}
-        setComments([...comments, commentToAdd])
-        setNewComment("")
+        {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
         }
-    })
-}
+      )
+      .then((response) => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          const commentToAdd = {
+            id: response.data.id,
+            commentBody: newComment,
+            displayname: response.data.displayname,
+            PostId: postObject.id,
+          };
+          setComments([...comments, commentToAdd]);
+          setNewComment("");
+        }
+      });
+  };
 
-const deleteComment = (id) => {
-
-    axios.delete(`http://localhost:3000/comments/${id}`, {headers: { accessToken: localStorage.getItem('accessToken')}
-}).then(() => {
-    setComments(comments.filter((val) => {
-        return val.id !== id
-    }))
-})
-}
+  const deleteComment = (id) => {
+    axios
+      .delete(`http://localhost:3000/comments/${id}`, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then(() => {
+        setComments(
+          comments.filter((val) => {
+            return val.id !== id;
+          })
+        );
+      });
+  };
 
   return (
     <div className="postPage">
@@ -59,7 +70,7 @@ const deleteComment = (id) => {
         <div className="post" id="individual">
           <div className="title"> {postObject.title} </div>
           <div className="body">{postObject.postText}</div>
-          <div className="footer">{postObject.username}</div>
+          <div className="footer">{postObject.displayname}</div>
         </div>
       </div>
       <div className="rightSide">
@@ -99,4 +110,4 @@ const deleteComment = (id) => {
   );
 }
 
-export default Post
+export default Post;

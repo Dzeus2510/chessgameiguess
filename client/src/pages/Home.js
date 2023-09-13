@@ -26,7 +26,7 @@ function Home() {
                 return (
                     <div className="post"  >
                         <div className="title">{value.title}</div>
-                        <div className="body" onClick={() => {navigate(`/display/${value.id}`)}}>{value.postText}</div>
+                        <div className="body" onClick={() => {navigate(`/post/${value.id}`)}}>{value.postText}</div>
                         <div className="footer">{value.displayname} 
                         <button onClick={() => {likeAPost(value.id);}}>👍</button>
                         </div>
