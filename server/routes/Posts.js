@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { Post, Like } = require("../models");
 
+const{validateToken} = require("../middleware/AuthMiddleware")
+
 //async is like a secret method ?
-router.get("/", async (req,res) => {
+router.get("/", validateToken, async (req,res) => {
     const listOfPost = await Post.findAll({include: [Like] });
-    res.json(listOfPost);
+    
+    const likedPosts = await Like.findAll({where: {UserId: req.user.id}})
+    res.json({listOfPost: listOfPost , listOfLikedPost: likedPosts});
 });
 
 router.post("/", async (req, res) => {
