@@ -6,6 +6,7 @@ import { AuthContext } from "./helpers/AuthContext";
 import Createpost from './pages/Createpost';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import PageNotFound from "./pages/PageNotFound";
 import Post from "./pages/Post";
 import Registration from "./pages/Registration";
 
@@ -52,14 +53,18 @@ function App() {
         <Router>
           <div className="navbar">
             <div className="links">
-              <Link to="/"> HomePage</Link>
-              <Link to="/createpost"> Create A Post</Link>
-              {!authState.status && (
+              {!authState.status ? (
                 <>
                   <Link to="/login"> Login</Link>
                   <Link to="/registration"> Registration</Link>
                 </>
+              ) : (
+                <>
+                <Link to="/"> HomePage</Link>
+                <Link to="/createpost"> Create A Post</Link>
+                </>
               )}
+              
             </div>
             <div className="loggedInContainer">
               <h1>{authState.displayname} </h1>
@@ -72,6 +77,8 @@ function App() {
             <Route path="/post/:id" element={<Post/>} />
             <Route path="/registration" element={<Registration/>} />
             <Route path="/login" element={<Login/>} />
+
+            <Route path="*" element={<PageNotFound/>} />
           </Routes>
         </Router>
       </AuthContext.Provider>

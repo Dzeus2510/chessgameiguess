@@ -12,11 +12,11 @@ body {
 }
 
 .unlikedPost {
-  background-color: white;
+  background-color: cyan;
 }
 
 .likedPost {
-  background-color: cyan;
+  background-color: white;
 }
 
 .post {
