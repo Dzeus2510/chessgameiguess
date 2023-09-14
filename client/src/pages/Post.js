@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 
 function Post() {
@@ -9,7 +9,8 @@ function Post() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { authState } = useContext(AuthContext);
-
+  
+  let nav = useNavigate()
   useEffect(() => {
     axios.get(`http://localhost:3000/posts/byId/${id}`).then((response) => {
       setPostObject(response.data);
@@ -64,13 +65,23 @@ function Post() {
       });
   };
 
+  const deletePost = (id) => {
+    axios.delete(`http://localhost:3000/posts/${id}`, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    })
+    .then(() => {
+      nav("/")
+    })
+  }
+
+
   return (
     <div className="postPage">
       <div className="leftSide">
         <div className="post" id="individual">
           <div className="title"> {postObject.title} </div>
           <div className="body">{postObject.postText}</div>
-          <div className="footer">{postObject.displayname}</div>
+          <div className="footer">{postObject.displayname} {authState.displayname === postObject.displayname && (<button onClick={() => {deletePost(postObject.id)}}>Delete</button>)}</div>
         </div>
       </div>
       <div className="rightSide">

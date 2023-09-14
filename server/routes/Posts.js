@@ -21,9 +21,18 @@ router.get('/byId/:id', async (req,res) => {
 router.post("/", validateToken, async (req, res) => {
     const post = req.body;
     post.displayname = req.user.displayname
+    post.UserId = req.user.id
     await Post.create(post);
     //wait for thing to insert
     res.json(post);
 });
+
+router.delete("/:postId", validateToken, async (req, res) => {
+    const postId = req.params.postId
+    await Post.destroy({where: {
+        id: postId
+    }})
+    res.json("Post deleted")
+})
 
 module.exports = router
