@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import { AuthContext } from "./helpers/AuthContext";
+import ChangePassword from "./pages/ChangePassword";
 import Createpost from './pages/Createpost';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -13,6 +14,7 @@ import Registration from "./pages/Registration";
 
 function App() {
   const [authState, setAuthState] = useState({
+    username: "",
     displayname: "",
     id: 0,
     status: false,
@@ -28,9 +30,10 @@ function App() {
       })
       .then((response) => {
         if (!localStorage.getItem("accessToken")) {
-          setAuthState({ displayname: "", id: 0, status: false });
+          setAuthState({ username: "", displayname: "", id: 0, status: false });
         } else {
           const updatedAuthState = {
+            username: response.data.username,
             displayname: response.data.displayname,
             id: response.data.id,
             status: true,
@@ -45,7 +48,7 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem("accessToken");
-    setAuthState({ displayname: "", id: 0, status: false });
+    setAuthState({username: "", displayname: "", id: 0, status: false });
   };
 
   return (
@@ -79,6 +82,7 @@ function App() {
             <Route path="/registration" element={<Registration/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/profile/:id" element={<Profile/>} />
+            <Route path="/changepassword" element={<ChangePassword/>} />
 
             <Route path="*" element={<PageNotFound/>} />
           </Routes>

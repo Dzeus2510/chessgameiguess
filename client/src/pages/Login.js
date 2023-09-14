@@ -15,7 +15,7 @@ function Login() {
         axios.post("http://localhost:3000/auth/login", data).then((response) => {
             if (response.data.error) {alert(response.data.error);}
             else{localStorage.setItem("accessToken", response.data.token);
-            setAuthState({displayname: response.data.displayname, id: response.data.id, status: true})
+            setAuthState({username: response.data.username ,displayname: response.data.displayname, id: response.data.id, status: true})
                   nav("/")
           }
         })

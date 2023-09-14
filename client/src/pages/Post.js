@@ -9,7 +9,7 @@ function Post() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { authState } = useContext(AuthContext);
-  
+
   let nav = useNavigate()
   useEffect(() => {
     axios.get(`http://localhost:3000/posts/byId/${id}`).then((response) => {
@@ -69,19 +69,44 @@ function Post() {
     axios.delete(`http://localhost:3000/posts/${id}`, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     })
-    .then(() => {
-      nav("/")
-    })
+      .then(() => {
+        nav("/")
+      })
   }
 
+  const editPost = (option) => {
+    if (option === "title") {
+      let newTitle = prompt("Enter new Title: ")
+      axios.put(`http://localhost:3000/posts/title`, { newTitle: newTitle, id: id }, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+
+      setPostObject({...postObject, title: newTitle})
+    } else {
+      let newPostText = prompt("Enter new Post Text: ")
+      axios.put(`http://localhost:3000/posts/postText`, { newPostText: newPostText, id: id }, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+
+      setPostObject({...postObject, postText: newPostText})
+    }
+  }
 
   return (
     <div className="postPage">
       <div className="leftSide">
         <div className="post" id="individual">
-          <div className="title"> {postObject.title} </div>
-          <div className="body">{postObject.postText}</div>
-          <div className="footer">{postObject.displayname} {authState.displayname === postObject.displayname && (<button onClick={() => {deletePost(postObject.id)}}>Delete</button>)}</div>
+          <div className="title" onClick={() => {
+            if (authState.displayname === postObject.displayname) {
+              editPost("title")
+            }
+          }}> {postObject.title} </div>
+          <div className="body" onClick={() => {
+            if (authState.displayname === postObject.displayname) {
+              editPost("body")
+            }
+          }}>{postObject.postText}</div>
+          <div className="footer">{postObject.displayname} {authState.displayname === postObject.displayname && (<button onClick={() => { deletePost(postObject.id) }}>Delete</button>)}</div>
         </div>
       </div>
       <div className="rightSide">
