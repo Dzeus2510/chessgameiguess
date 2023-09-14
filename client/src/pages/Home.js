@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../helpers/AuthContext";
 
 
@@ -64,7 +64,10 @@ function Home() {
                     <div className="post"  >
                         <div className="title">{value.title}</div>
                         <div className="body" onClick={() => { navigate(`/post/${value.id}`) }}>{value.postText}</div>
-                        <div className="footer">{value.displayname}
+                        <div className="footer">
+                            <div className="username">
+                                <Link to={`/profile/${value.UserId}`}>{value.displayname}</Link>
+                            </div>
                             <button onClick={() => { likeAPost(value.id); }} className={likedPosts.includes(value.id) ? "unlikedPost" : "likedPost"}>👍</button>
                             <label>{value.Likes.length}</label>
                         </div>
