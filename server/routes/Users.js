@@ -52,12 +52,13 @@ router.put('/changepassword', validateToken, async (req, res) => {
     const user = await User.findOne({ where: { username: req.user.username } });
 
     bcrypt.compare(oldPassword, user.password).then((match) => {
-        if (!match) res.json({ error: "Wrong Old Password" });
-       
-        bcrypt.hash(newPassword, 10).then((hash) => {
-            User.update({password: hash},{where: { username: req.user.username }})
-            res.json("Success Changed password")
-        })
+        if (!match){ res.json({ error: "Wrong Old Password" });}
+        else {
+            bcrypt.hash(newPassword, 10).then((hash) => {
+                User.update({ password: hash }, { where: { username: req.user.username } })
+                res.json("Success Changed password")
+            })
+        }
     });
 })
 
