@@ -1,0 +1,35 @@
+version: '3'
+services:
+  node:
+    image: node:18-alpine
+    command: sh -c "npm install && npm start"
+    ports:
+      - "3001:3001"
+    working_dir: /app/node
+    volumes:
+      - ./server:/app/node  # Host directory for Node.js app
+    environment:
+      MYSQL_HOSTNAME: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: doanngocvu25102003
+      MYSQL_DB: fslearning
+
+  react:
+    image: node:18-alpine
+    command: sh -c "npm install && npm start"
+    ports:
+      - "3000:3000"
+    working_dir: /app/react
+    volumes:
+      - ./client:/app/react  # Host directory for React app
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - node-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: doanngocvu25102003
+      MYSQL_DATABASE: fslearning
+
+volumes:
+  node-mysql-data:

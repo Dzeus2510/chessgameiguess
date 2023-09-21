@@ -12,11 +12,11 @@ function Post() {
 
   let nav = useNavigate()
   useEffect(() => {
-    axios.get(`http://localhost:3000/posts/byId/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
       setPostObject(response.data);
     });
 
-    axios.get(`http://localhost:3000/comments/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
       setComments(response.data);
     });
   }, [id]);
@@ -24,7 +24,7 @@ function Post() {
   const addComment = () => {
     axios
       .post(
-        "http://localhost:3000/comments",
+        "http://localhost:3001/comments",
         {
           commentBody: newComment,
           PostId: postObject.id,
@@ -53,7 +53,7 @@ function Post() {
 
   const deleteComment = (id) => {
     axios
-      .delete(`http://localhost:3000/comments/${id}`, {
+      .delete(`http://localhost:3001/comments/${id}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
@@ -66,7 +66,7 @@ function Post() {
   };
 
   const deletePost = (id) => {
-    axios.delete(`http://localhost:3000/posts/${id}`, {
+    axios.delete(`http://localhost:3001/posts/${id}`, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     })
       .then(() => {
@@ -77,14 +77,14 @@ function Post() {
   const editPost = (option) => {
     if (option === "title") {
       let newTitle = prompt("Enter new Title: ")
-      axios.put(`http://localhost:3000/posts/title`, { newTitle: newTitle, id: id }, {
+      axios.put(`http://localhost:3001/posts/title`, { newTitle: newTitle, id: id }, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
 
       setPostObject({...postObject, title: newTitle})
     } else {
       let newPostText = prompt("Enter new Post Text: ")
-      axios.put(`http://localhost:3000/posts/postText`, { newPostText: newPostText, id: id }, {
+      axios.put(`http://localhost:3001/posts/postText`, { newPostText: newPostText, id: id }, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
 

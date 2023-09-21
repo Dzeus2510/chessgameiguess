@@ -14,7 +14,7 @@ function Home() {
         if (!localStorage.getItem("accessToken")) {
             navigate("/login")
         } else {
-            axios.get("http://localhost:3000/posts", {
+            axios.get("http://localhost:3001/posts", {
                 headers: { accessToken: localStorage.getItem("accessToken") }
             }).then((response) => {
                 setListOfPost(response.data.listOfPost);
@@ -27,7 +27,7 @@ function Home() {
 
 
     const likeAPost = (postId) => {
-        axios.post("http://localhost:3000/likes", { PostId: postId }, {
+        axios.post("http://localhost:3001/likes", { PostId: postId }, {
             headers: { accessToken: localStorage.getItem("accessToken") }
         }).then((response) => {
             setListOfPost(listOfPost.map((post) => {

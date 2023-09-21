@@ -29,7 +29,7 @@ function Createpost() {
 
     const onSubmit = (data) => {
 
-        axios.post("http://localhost:3000/posts", data, {headers: {accessToken: localStorage.getItem("accessToken")}},).then((response) => {
+        axios.post("http://localhost:3001/posts", data, {headers: {accessToken: localStorage.getItem("accessToken")}},).then((response) => {
             nav("/")
     });
     };
