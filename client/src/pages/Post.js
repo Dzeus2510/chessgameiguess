@@ -15,11 +15,13 @@ function Post() {
     axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
       setPostObject(response.data);
     });
+    //get the post with the chosen id
 
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
       setComments(response.data);
     });
   }, [id]);
+  //get all the comments of the post
 
   const addComment = () => {
     axios
@@ -35,6 +37,7 @@ function Post() {
           },
         }
       )
+      //set comment and headers
       .then((response) => {
         if (response.data.error) {
           console.log(response.data.error);
@@ -50,6 +53,7 @@ function Post() {
         }
       });
   };
+  //if log error, else add a new comment to page
 
   const deleteComment = (id) => {
     axios
@@ -64,6 +68,7 @@ function Post() {
         );
       });
   };
+  //delete the comment
 
   const deletePost = (id) => {
     axios.delete(`http://localhost:3001/posts/${id}`, {
@@ -73,6 +78,7 @@ function Post() {
         nav("/")
       })
   }
+  //delete the post and redirect to home page
 
   const editPost = (option) => {
     if (option === "title") {
@@ -91,6 +97,7 @@ function Post() {
       setPostObject({...postObject, postText: newPostText})
     }
   }
+  //edit the title and content of post
 
   return (
     <div className="postPage">

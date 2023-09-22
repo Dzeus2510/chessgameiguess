@@ -10,5 +10,6 @@ function PageNotFound() {
     </div>
   )
 }
-
+//a not found page
+//bottom text
 export default PageNotFound

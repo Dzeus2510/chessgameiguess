@@ -16,6 +16,7 @@ router.post("/", async (req, res) => {
         res.json("Success")
     })
 });
+//Registration, create a new account, then return json "Success"
 
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
@@ -30,14 +31,15 @@ router.post("/login", async (req, res) => {
                 const accessToken = sign({ username: user.username, id: user.id, displayname: user.displayname }, "important")
                 res.json({ token: accessToken, username: user.username, displayname: user.displayname, id: user.id })
             }
-
         });
     }
 })
+//Login, find the user with the same username in database, change the input password to hash, then compare the hash'ed password with the hash in database to check if the user input correct password
 
 router.get('/auth', validateToken, async (res, req) => {
     req.json(res.user)
 })
+//get validateToken to check if the user is logged in
 
 router.get("/basicinfo/:id", async (req, res) => {
     const id = req.params.id
@@ -46,6 +48,7 @@ router.get("/basicinfo/:id", async (req, res) => {
 
     res.json(basicInfo)
 })
+//get user info based on their id, exluding the password and updatedAt
 
 router.put('/changepassword', validateToken, async (req, res) => {
     const { oldPassword, newPassword } = req.body
@@ -61,5 +64,6 @@ router.put('/changepassword', validateToken, async (req, res) => {
         }
     });
 })
+//Change password, compare user input password to current password in database, if they match, continue to update the password
 
 module.exports = router

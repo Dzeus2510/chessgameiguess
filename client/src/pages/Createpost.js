@@ -21,18 +21,20 @@ function Createpost() {
             nav("/login")
         }
     }, [])
+    //check in localstorage, if there are no accessToken (no user logged in), redirect to /login
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("You Must Input A Title"),
         postText: Yup.string().required("You Must Input A Post Text"),
     });
+    //validate, user must input title and body text
 
     const onSubmit = (data) => {
-
         axios.post("http://localhost:3001/posts", data, {headers: {accessToken: localStorage.getItem("accessToken")}},).then((response) => {
             nav("/")
     });
     };
+    //after posting a post, redirect user to main page
 
    
 
@@ -46,7 +48,6 @@ function Createpost() {
                 <br></br><label>Post: </label>
                 <ErrorMessage name="postText" component="span" />
                 <Field id="formContainer" name="postText" placeholder="Write Post" />
-
                 <button type="submit">Create Post</button>
             </Form>
         </Formik>

@@ -17,11 +17,13 @@ function Profile() {
             setUsername(response.data.username)
             setDisplayname(response.data.displayname)
         })
+        //set the username and displayname of the user choosed
 
         axios.get(`http://localhost:3001/posts/byuserId/${id}`).then((response) => {
             setListOfPosts(response.data)
         })
     }, [])
+    //get list of posts made by the user
 
     return (
         <div className='profilePageContainer'>

@@ -19,14 +19,15 @@ function Registration() {
         password: Yup.string().min(4).max(20).required("You Must Input A Password"),
         displayname: Yup.string().min(3).max(64).required("Please Input Your Name"),
     });
+    //validate users input for creating account
 
     const onSubmit = (data) => {
         axios.post("http://localhost:3001/auth", data).then((response) => {
             alert("created Successfully")
             nav("/login")
-
     });
     };
+    //after done creating account, it will redirect to login page
 
   return (
     <div className="createPostPage">

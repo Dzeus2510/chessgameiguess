@@ -24,7 +24,8 @@ function Home() {
             });
         }
     }, []);
-
+    //if user not logged in, redirect to /login
+    //else, set accesstoken in headers, and find all liked post to highlight the like button, thus make it easier to detect which post user has liked
 
     const likeAPost = (postId) => {
         axios.post("http://localhost:3001/likes", { PostId: postId }, {
@@ -43,6 +44,7 @@ function Home() {
                     return post;
                 }
             }))
+            //
             if (likedPosts.includes(postId)) {
                 setLikedPosts(
                     likedPosts.filter((id) => {
@@ -54,6 +56,7 @@ function Home() {
             }
         })
     }
+    //
 
 
 
