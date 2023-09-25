@@ -48,8 +48,8 @@ function Post() {
             displayname: response.data.displayname,
             PostId: postObject.id,
           };
-          setComments([...comments, commentToAdd]);
-          setNewComment("");
+
+          window.location.reload(false);
         }
       });
   };

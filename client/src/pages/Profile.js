@@ -42,7 +42,8 @@ function Profile() {
                         <div className="post"  >
                             <div className="title">{value.title}</div>
                             <div className="body" onClick={() => { navigate(`/post/${value.id}`) }}>{value.postText}</div>
-                            <div className="footer">{value.displayname}
+                            <div className="footer">
+                                <div>{value.displayname}</div>
                                 <div className="like">{value.Likes.length}</div>
                             </div>
                         </div>
