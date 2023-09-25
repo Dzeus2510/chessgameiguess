@@ -1,11 +1,14 @@
 version: '3'
+#Specify the Docker Compose version
 services:
   node:
     image: node:18-alpine
     command: sh -c "npm install && npm start"
+    #Run command in shell, -c:  tell sh to read and run the string
     ports:
       - "3001:3001"
     working_dir: /app/node
+    #choose the working directory as node in app
     volumes:
       - ./server:/app/node  # Host directory for Node.js app
     environment:
@@ -13,6 +16,7 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: doanngocvu25102003
       MYSQL_DB: fslearning
+      #Set up environment for database connection
 
   react:
     image: node:18-alpine
@@ -30,6 +34,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: doanngocvu25102003
       MYSQL_DATABASE: fslearning
+      #Set up the volume and environment for database
 
 volumes:
   node-mysql-data:
+#Definde the Volume
