@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
+import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import { AuthContext } from "./helpers/AuthContext";
 import ChangePassword from "./pages/ChangePassword";
@@ -12,7 +12,6 @@ import Post from "./pages/Post";
 import Profile from "./pages/Profile";
 import Registration from "./pages/Registration";
 
-let nav = useNavigate()
 function App() {
   const [authState, setAuthState] = useState({
     username: "",
@@ -45,13 +44,10 @@ function App() {
         }
       });
   }, []);
-  
 
   const logout = () => {
     localStorage.removeItem("accessToken");
-    setAuthState({username: "", displayname: "", id: 0, status: false });
-    alert("Logged Out")
-    nav("/login")
+    setAuthState({ username: "", displayname: "", id: 0, status: false });
   };
 
   return (
@@ -67,11 +63,10 @@ function App() {
                 </>
               ) : (
                 <>
-                <Link to="/"> HomePage</Link>
-                <Link to="/createpost"> Create A Post</Link>
+                  <Link to="/"> HomePage</Link>
+                  <Link to="/createpost"> Create A Post</Link>
                 </>
               )}
-              
             </div>
             <div className="loggedInContainer">
               <h1>{authState.displayname} </h1>
@@ -79,15 +74,14 @@ function App() {
             </div>
           </div>
           <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/createpost" element={<Createpost/>} />
-            <Route path="/post/:id" element={<Post/>} />
-            <Route path="/registration" element={<Registration/>} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/profile/:id" element={<Profile/>} />
-            <Route path="/changepassword" element={<ChangePassword/>} />
-
-            <Route path="*" element={<PageNotFound/>} />
+            <Route path="/" element={<Home />} />
+            <Route path="/createpost" element={<Createpost />} />
+            <Route path="/post/:id" element={<Post />} />
+            <Route path="/registration" element={<Registration />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/changepassword" element={<ChangePassword />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>
       </AuthContext.Provider>
