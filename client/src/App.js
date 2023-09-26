@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Link, Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import { AuthContext } from "./helpers/AuthContext";
 import ChangePassword from "./pages/ChangePassword";
@@ -12,6 +12,7 @@ import Post from "./pages/Post";
 import Profile from "./pages/Profile";
 import Registration from "./pages/Registration";
 
+let nav = useNavigate()
 function App() {
   const [authState, setAuthState] = useState({
     username: "",
@@ -49,6 +50,8 @@ function App() {
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({username: "", displayname: "", id: 0, status: false });
+    alert("Logged Out")
+    nav("/login")
   };
 
   return (
