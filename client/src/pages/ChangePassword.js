@@ -21,8 +21,8 @@ function ChangePassword() {
     return (
         <div>
             <h1>ChangePassword</h1>
-            <input type='text' placeholder='Old Password' onChange={(event) => { setOldPassword(event.target.value) }}></input>
-            <input type='text' placeholder='New Password' onChange={(event) => { setNewPassword(event.target.value) }}></input>
+            <input type='password' placeholder='Old Password' onChange={(event) => { setOldPassword(event.target.value) }}></input>
+            <input type='password' placeholder='New Password' onChange={(event) => { setNewPassword(event.target.value) }}></input>
             <button onClick={changePassword}>Save</button>
         </div>
     )
