@@ -3,7 +3,7 @@
     "username": "root",
     "password": "doanngocvu25102003",
     "database": "fslearning",
-    "host": "127.0.0.1",
+    "host": "mysql",
     "port": "3306",
     "dialect": "mysql"
   },

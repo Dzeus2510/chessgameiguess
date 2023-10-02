@@ -1,8 +1,11 @@
-version: '3'
+version: "3"
 #Specify the Docker Compose version
 services:
   node:
-    image: node:18-alpine
+    image: ruxdoang/nodeapptwitter
+    #build:
+    #  context: ./server
+    # dockerfile: Dockerfile
     command: sh -c "npm install && npm start"
     #Run command in shell, -c:  tell sh to read and run the string
     ports:
@@ -10,22 +13,22 @@ services:
     working_dir: /app/node
     #choose the working directory as node in app
     volumes:
-      - ./server:/app/node  # Host directory for Node.js app
+      - ./server:/app/node # Host directory for Node.js app
     environment:
-      MYSQL_HOSTNAME: mysql
+      MYSQL_HOSTNAME: mysql #host.docker.internal
       MYSQL_USER: root
       MYSQL_PASSWORD: doanngocvu25102003
       MYSQL_DB: fslearning
       #Set up environment for database connection
 
   react:
-    image: node:18-alpine
+    image: ruxdoang/reactapptwitter
     command: sh -c "npm install && npm start"
     ports:
       - "3000:3000"
     working_dir: /app/react
     volumes:
-      - ./client:/app/react  # Host directory for React app
+      - ./client:/app/react # Host directory for React app
 
   mysql:
     image: mysql:8.0
